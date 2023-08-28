@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-ssi_purchase',
+        'odoo14-addon-ssi_purchase_stock',
     ],
     classifiers=[
         'Programming Language :: Python',
