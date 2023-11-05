@@ -11,6 +11,7 @@
     "application": True,
     "depends": [
         "purchase",
+        "ssi_master_data_mixin",
     ],
     "data": [
         "security/ir.model.access.csv",
