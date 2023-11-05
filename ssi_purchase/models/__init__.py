@@ -3,5 +3,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from . import (
-    models
+    purchase_order_type,
+    purchase_order,
 )
