@@ -15,7 +15,8 @@ def migrate(cr, version):
         purchase_order po
     SET
         type_id = t.id
-    FROM purchase_order_type t
+    FROM
+        purchase_order_type t
     WHERE
         t.code = 'T0001'
         AND po.type_id IS NULL;
