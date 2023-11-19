@@ -8,6 +8,42 @@
   <field name="groups_id" eval="[(6, 0, [ref('original_purchase_group')])]" />
 </record>
 
+<record id="purchase_order_form_view_form" model="ir.ui.view">
+    <field name="name">purchase.order - form</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_ref']" position="after">
+            <field name="type_id" />
+        </xpath>
+    </field>
+</record>
+
+<record id="purchase_order_form_view_tree" model="ir.ui.view">
+    <field name="name">purchase.order - tree</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_view_tree" />
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="after">
+            <field name="type_id" />
+        </xpath>
+    </field>
+</record>
+
+<record id="purchase_order_form_view_search" model="ir.ui.view">
+    <field name="name">purchase.order - search</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_view_search" />
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="after">
+            <field name="type_id" />
+        </xpath>
+        <xpath expr="//filter[@name='order_date']" position="after">
+            <filter name="grp_type_id" string="Type" context="{'group_by':'type_id'}" />
+        </xpath>
+    </field>
+</record>
+
 <record id="purchase_form_action" model="ir.actions.act_window">
     <field name="name">Purchase Orders</field>
     <field name="type">ir.actions.act_window</field>
