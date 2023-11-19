@@ -57,6 +57,7 @@
         name="Purchase Order Types"
         parent="purchase.menu_purchase_config"
         action="purchase_order_type_action"
+        groups="purchase_order_type_group"
         sequence="10"
     />
 

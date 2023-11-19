@@ -14,9 +14,9 @@
         "ssi_master_data_mixin",
     ],
     "data": [
-        "security/ir.model.access.csv",
         "security/ir_module_category_data.xml",
         "security/res_group_data.xml",
+        "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
         "data/purchase_order_type.xml",
         "views/res_partner_views.xml",
