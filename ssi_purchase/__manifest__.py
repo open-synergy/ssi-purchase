@@ -11,6 +11,7 @@
     "application": True,
     "depends": [
         "purchase",
+        "ssi_policy_mixin",
         "ssi_master_data_mixin",
     ],
     "data": [

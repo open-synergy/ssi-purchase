@@ -13,8 +13,43 @@
     <field name="model">purchase.order</field>
     <field name="inherit_id" ref="purchase.purchase_order_form" />
     <field name="arch" type="xml">
+        <xpath expr="//button[@id='bid_confirm']" position="attributes">
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['sent']), ('confirm_ok', '!=', True)]}</attribute>
+        </xpath>
+        <xpath expr="//button[@id='draft_confirm']" position="attributes">
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['draft']), ('confirm_ok', '!=', True)]}</attribute>
+        </xpath>
+        <xpath expr="//button[@name='button_cancel']" position="attributes">
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['draft', 'to approve', 'sent', 'purchase']), ('cancel_ok', '!=', True)]}</attribute>
+        </xpath>
+        <xpath expr="//button[@name='button_draft']" position="attributes">
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['cancel']), ('draft_ok', '!=', True)]}</attribute>
+        </xpath>
         <xpath expr="//field[@name='partner_ref']" position="after">
             <field name="type_id" />
+        </xpath>
+        <xpath expr="//page[@name='products']" position="after">
+            <page name="policy" string="Policies" groups="base.group_system">
+                <group name="policy_1" colspan="4" col="2">
+                    <field name="policy_template_id" />
+                    <button
+                            name="action_reload_policy_template"
+                            type="object"
+                            string="Reload Template Policy"
+                            class="oe_highlight"
+                            icon="fa-refresh"
+                        />
+                </group>
+                <group name="policy_2" colspan="4" col="2">
+                    <field name="confirm_ok" order="97" />
+                    <field name="cancel_ok" order="98" />
+                    <field name="draft_ok" order="99" />
+                </group>
+            </page>
         </xpath>
     </field>
 </record>
