@@ -25,13 +25,33 @@ class PurchaseOrder(models.Model):
             "draft": [("readonly", False)],
         },
     )
-    confirm_ok = fields.Boolean(
-        string="Can Confirm",
+    email_ok = fields.Boolean(
+        string="Can Send by Email",
         compute="_compute_policy",
-        default=False,
+        compute_sudo=True,
     )
-    cancel_ok = fields.Boolean(
-        string="Can Cancel",
+    print_ok = fields.Boolean(
+        string="Can Print RFQ",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    confirm_ok = fields.Boolean(
+        string="Can Confirm Order",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    approve_ok = fields.Boolean(
+        string="Can Approve Order",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    invoice_ok = fields.Boolean(
+        string="Can Create Bill",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    reminder_mail_ok = fields.Boolean(
+        string="Can Confirm Receipt Date",
         compute="_compute_policy",
         compute_sudo=True,
     )
@@ -40,14 +60,36 @@ class PurchaseOrder(models.Model):
         compute="_compute_policy",
         compute_sudo=True,
     )
+    cancel_ok = fields.Boolean(
+        string="Can Cancel",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    done_ok = fields.Boolean(
+        string="Can Lock",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    unlock_ok = fields.Boolean(
+        string="Can Unlock",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
 
     @api.model
     def _get_policy_field(self):
         res = super(PurchaseOrder, self)._get_policy_field()
         policy_field = [
+            "email_ok",
+            "print_ok",
             "confirm_ok",
-            "cancel_ok",
+            "approve_ok",
+            "invoice_ok",
+            "reminder_mail_ok",
             "draft_ok",
+            "cancel_ok",
+            "done_ok",
+            "unlock_ok",
         ]
         res += policy_field
         return res
