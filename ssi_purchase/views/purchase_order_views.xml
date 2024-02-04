@@ -35,7 +35,8 @@
             <attribute name="attrs">{'invisible': ['|', ('confirm_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='button_approve']" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('approve_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': [('approve_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='action_create_invoice'][1]" position="attributes">
             <attribute name="attrs">{'invisible': ['|', ('invoice_ok', '!=', True), ('invoice_status', 'in', ('no', 'invoiced'))]}</attribute>
@@ -47,16 +48,20 @@
             <attribute name="attrs">{'invisible': [('reminder_mail_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='button_draft']" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('draft_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': [('draft_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='button_cancel']" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('cancel_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': [('cancel_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='button_done']" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('done_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': [('done_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='button_unlock']" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('unlock_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
+            <attribute name="attrs">{'invisible': [('unlock_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//field[@name='partner_ref']" position="after">
             <field name="type_id" />
