@@ -23,7 +23,45 @@
     <field name="restrict_state" eval="1" />
     <field
                 name="state_ids"
-                search="[('field_id.model_id.model','=','purchase.order'),('value','in',['draft','sent','purchase'])]"
+                search="[('field_id.model_id.model','=','purchase.order'),('value','=','draft')]"
+            />
+    <field name="restrict_user" eval="1" />
+    <field name="computation_method">use_group</field>
+    <field
+                name="group_ids"
+                eval="[(6,0,[ref('ssi_purchase.purchase_order_user_group')])]"
+            />
+    <field name="restrict_additional" eval="0" />
+</record>
+<record id="policy_template_purchase_order_resend_email" model="policy.template_detail">
+    <field name="template_id" ref="policy_template_purchase_order" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','purchase.order'),('name','=','resend_email_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field
+                name="state_ids"
+                search="[('field_id.model_id.model','=','purchase.order'),('value','=','sent')]"
+            />
+    <field name="restrict_user" eval="1" />
+    <field name="computation_method">use_group</field>
+    <field
+                name="group_ids"
+                eval="[(6,0,[ref('ssi_purchase.purchase_order_user_group')])]"
+            />
+    <field name="restrict_additional" eval="0" />
+</record>
+<record id="policy_template_purchase_order_email_po" model="policy.template_detail">
+    <field name="template_id" ref="policy_template_purchase_order" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','purchase.order'),('name','=','email_po_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field
+                name="state_ids"
+                search="[('field_id.model_id.model','=','purchase.order'),('value','=','purchase')]"
             />
     <field name="restrict_user" eval="1" />
     <field name="computation_method">use_group</field>
@@ -107,7 +145,8 @@
                 name="group_ids"
                 eval="[(6,0,[ref('ssi_purchase.purchase_order_user_group')])]"
             />
-    <field name="restrict_additional" eval="0" />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = document.order_line</field>
 </record>
 <record id="policy_template_purchase_order_reminder_mail" model="policy.template_detail">
     <field name="template_id" ref="policy_template_purchase_order" />

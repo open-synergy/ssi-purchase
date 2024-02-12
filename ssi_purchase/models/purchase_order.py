@@ -30,6 +30,16 @@ class PurchaseOrder(models.Model):
         compute="_compute_policy",
         compute_sudo=True,
     )
+    resend_email_ok = fields.Boolean(
+        string="Can Re-Send by Email",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    email_po_ok = fields.Boolean(
+        string="Can Send PO by Email",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
     print_ok = fields.Boolean(
         string="Can Print RFQ",
         compute="_compute_policy",
@@ -81,6 +91,8 @@ class PurchaseOrder(models.Model):
         res = super(PurchaseOrder, self)._get_policy_field()
         policy_field = [
             "email_ok",
+            "resend_email_ok",
+            "email_po_ok",
             "print_ok",
             "confirm_ok",
             "approve_ok",

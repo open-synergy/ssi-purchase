@@ -14,54 +14,62 @@
     <field name="inherit_id" ref="purchase.purchase_order_form" />
     <field name="arch" type="xml">
         <xpath expr="//button[@name='action_rfq_send'][1]" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('email_ok', '!=', True)]}</attribute>
+            <attribute name="attrs">{'invisible': [('email_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
+            <attribute name="class"></attribute>
         </xpath>
         <xpath expr="//button[@name='action_rfq_send'][2]" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('email_ok', '!=', True)]}</attribute>
+            <attribute name="attrs">{'invisible': [('resend_email_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
         </xpath>
         <xpath expr="//button[@name='action_rfq_send'][3]" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('email_ok', '!=', True)]}</attribute>
+            <attribute name="attrs">{'invisible': [('email_po_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
         </xpath>
         <xpath expr="//button[@name='print_quotation'][1]" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('print_ok', '!=', True)]}</attribute>
+            <attribute name="attrs">{'invisible': [('print_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
+            <attribute name="class"></attribute>
         </xpath>
         <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('print_ok', '!=', True)]}</attribute>
+            <attribute name="invisible">1</attribute>
         </xpath>
         <xpath expr="//button[@id='draft_confirm']" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('confirm_ok', '!=', True)]}</attribute>
+            <attribute name="attrs">{'invisible': [('confirm_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
+            <attribute name="class">btn-primary</attribute>
         </xpath>
         <xpath expr="//button[@id='bid_confirm']" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('confirm_ok', '!=', True)]}</attribute>
+            <attribute name="invisible">1</attribute>
         </xpath>
         <xpath expr="//button[@name='button_approve']" position="attributes">
             <attribute name="states"></attribute>
             <attribute name="attrs">{'invisible': [('approve_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='action_create_invoice'][1]" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', ('invoice_ok', '!=', True), ('invoice_status', 'in', ('no', 'invoiced'))]}</attribute>
+            <attribute name="attrs">{'invisible': [('invoice_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='action_create_invoice'][2]" position="attributes">
-            <attribute name="attrs">{'invisible': ['|', '|', ('invoice_ok', '!=', True), ('invoice_status', 'not in', ('no', 'invoiced')), ('order_line', '=', [])]}</attribute>
+            <attribute name="invisible">1</attribute>
         </xpath>
         <xpath expr="//button[@name='confirm_reminder_mail']" position="attributes">
             <attribute name="attrs">{'invisible': [('reminder_mail_ok', '!=', True)]}</attribute>
         </xpath>
         <xpath expr="//button[@name='button_draft']" position="attributes">
-            <attribute name="states"></attribute>
             <attribute name="attrs">{'invisible': [('draft_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
         </xpath>
         <xpath expr="//button[@name='button_cancel']" position="attributes">
-            <attribute name="states"></attribute>
             <attribute name="attrs">{'invisible': [('cancel_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
         </xpath>
         <xpath expr="//button[@name='button_done']" position="attributes">
-            <attribute name="states"></attribute>
             <attribute name="attrs">{'invisible': [('done_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
         </xpath>
         <xpath expr="//button[@name='button_unlock']" position="attributes">
-            <attribute name="states"></attribute>
             <attribute name="attrs">{'invisible': [('unlock_ok', '!=', True)]}</attribute>
+            <attribute name="states"></attribute>
         </xpath>
         <xpath expr="//field[@name='partner_ref']" position="after">
             <field name="type_id" />
@@ -80,6 +88,8 @@
                 </group>
                 <group name="policy_2" colspan="4" col="2">
                     <field name="email_ok" />
+                    <field name="resend_email_ok" />
+                    <field name="email_po_ok" />
                     <field name="print_ok" />
                     <field name="confirm_ok" />
                     <field name="approve_ok" />
