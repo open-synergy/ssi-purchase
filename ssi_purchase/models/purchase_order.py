@@ -10,12 +10,28 @@ class PurchaseOrder(models.Model):
     _inherit = [
         "purchase.order",
         "mixin.policy",
+        "mixin.sequence",
     ]
+    _document_number_field = "name"
 
     def _compute_policy(self):
         _super = super(PurchaseOrder, self)
         _super._compute_policy()
 
+    @api.depends("state", "date_order")
+    def _compute_name_by_sequence(self):
+        for rec in self:
+            name = rec.name or "/"
+            if rec.state == "purchase" and (not rec.name or rec.name == "/"):
+                template = rec._get_template_sequence()
+                if template:
+                    name = template.create_sequence(rec)
+            rec.name = name
+
+    name = fields.Char(
+        compute="_compute_name_by_sequence",
+        store=True,
+    )
     type_id = fields.Many2one(
         comodel_name="purchase_order_type",
         string="Type",
@@ -87,6 +103,22 @@ class PurchaseOrder(models.Model):
     )
 
     @api.model
+    def default_get(self, fields):
+        _super = super(PurchaseOrder, self)
+        res = _super.default_get(fields)
+
+        res["name"] = "/"
+
+        return res
+
+    @api.model
+    def create(self, vals):
+        vals["name"] = "/"
+        _super = super(PurchaseOrder, self)
+        res = _super.create(vals)
+        return res
+
+    @api.model
     def _get_policy_field(self):
         res = super(PurchaseOrder, self)._get_policy_field()
         policy_field = [
@@ -105,3 +137,13 @@ class PurchaseOrder(models.Model):
         ]
         res += policy_field
         return res
+
+    def name_get(self):
+        result = []
+        for record in self:
+            if getattr(record, self._document_number_field) == "/":
+                name = "*" + str(record.id)
+            else:
+                name = record.name
+            result.append((record.id, name))
+        return result
