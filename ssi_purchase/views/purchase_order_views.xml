@@ -13,6 +13,12 @@
     <field name="model">purchase.order</field>
     <field name="inherit_id" ref="purchase.purchase_order_form" />
     <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="attributes">
+            <attribute name="readonly">0</attribute>
+            <attribute
+                    name="attrs"
+                >{'readonly':[('manual_number_ok','=',False)]}</attribute>
+        </xpath>
         <xpath expr="//button[@name='action_rfq_send'][1]" position="attributes">
             <attribute
                     name="attrs"
@@ -121,6 +127,7 @@
                     <field name="cancel_ok" />
                     <field name="done_ok" />
                     <field name="unlock_ok" />
+                    <field name="manual_number_ok" />
                 </group>
             </page>
         </xpath>

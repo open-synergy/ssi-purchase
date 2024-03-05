@@ -18,20 +18,6 @@ class PurchaseOrder(models.Model):
         _super = super(PurchaseOrder, self)
         _super._compute_policy()
 
-    @api.depends("state", "date_order")
-    def _compute_name_by_sequence(self):
-        for rec in self:
-            name = rec.name or "/"
-            if rec.state == "purchase" and (not rec.name or rec.name == "/"):
-                template = rec._get_template_sequence()
-                if template:
-                    name = template.create_sequence(rec)
-            rec.name = name
-
-    name = fields.Char(
-        compute="_compute_name_by_sequence",
-        store=True,
-    )
     type_id = fields.Many2one(
         comodel_name="purchase_order_type",
         string="Type",
@@ -101,6 +87,11 @@ class PurchaseOrder(models.Model):
         compute="_compute_policy",
         compute_sudo=True,
     )
+    manual_number_ok = fields.Boolean(
+        string="Can Input Manual Document Number",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
 
     @api.model
     def default_get(self, fields):
@@ -116,6 +107,14 @@ class PurchaseOrder(models.Model):
         vals["name"] = "/"
         _super = super(PurchaseOrder, self)
         res = _super.create(vals)
+        return res
+
+    def button_approve(self, force=False):
+        _super = super(PurchaseOrder, self)
+        res = _super.button_approve(force=force)
+        for record in self:
+            if record.state == "purchase" and (not record.name or record.name == "/"):
+                record._create_sequence()
         return res
 
     @api.model
@@ -134,6 +133,7 @@ class PurchaseOrder(models.Model):
             "cancel_ok",
             "done_ok",
             "unlock_ok",
+            "manual_number_ok",
         ]
         res += policy_field
         return res
