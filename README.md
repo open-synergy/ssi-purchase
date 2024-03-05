@@ -18,7 +18,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[ssi_purchase](ssi_purchase/) | 14.0.2.2.0 |  | Purchase
+[ssi_purchase](ssi_purchase/) | 14.0.2.3.0 |  | Purchase
 [ssi_purchase_stock](ssi_purchase_stock/) | 14.0.1.1.0 |  | Purchase + Inventory Integration
 
 [//]: # (end addons)
