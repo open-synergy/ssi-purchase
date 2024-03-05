@@ -128,7 +128,10 @@
             />
     <field name="restrict_additional" eval="0" />
 </record>
-<record id="policy_template_purchase_order_create_invoice" model="policy.template_detail">
+<record
+            id="policy_template_purchase_order_create_invoice"
+            model="policy.template_detail"
+        >
     <field name="template_id" ref="policy_template_purchase_order" />
     <field
                 name="field_id"
@@ -148,7 +151,10 @@
     <field name="restrict_additional" eval="1" />
     <field name="additional_python_code">result = document.order_line</field>
 </record>
-<record id="policy_template_purchase_order_reminder_mail" model="policy.template_detail">
+<record
+            id="policy_template_purchase_order_reminder_mail"
+            model="policy.template_detail"
+        >
     <field name="template_id" ref="policy_template_purchase_order" />
     <field
                 name="field_id"
@@ -166,7 +172,9 @@
                 eval="[(6,0,[ref('ssi_purchase.purchase_order_user_group')])]"
             />
     <field name="restrict_additional" eval="1" />
-    <field name="additional_python_code">result = not document.mail_reminder_confirmed and document.date_planned</field>
+    <field
+                name="additional_python_code"
+            >result = not document.mail_reminder_confirmed and document.date_planned</field>
 </record>
 <record id="policy_template_purchase_order_draft" model="policy.template_detail">
     <field name="template_id" ref="policy_template_purchase_order" />
@@ -241,6 +249,28 @@
     <field
                 name="group_ids"
                 eval="[(6,0,[ref('ssi_purchase.purchase_order_user_group')])]"
+            />
+    <field name="restrict_additional" eval="0" />
+</record>
+<record
+            id="policy_template_purchase_order_manual_number"
+            model="policy.template_detail"
+        >
+    <field name="template_id" ref="policy_template_purchase_order" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','purchase.order'),('name','=','manual_number_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field
+                name="state_ids"
+                search="[('field_id.model_id.model','=','purchase.order'),('value','=','draft')]"
+            />
+    <field name="restrict_user" eval="1" />
+    <field name="computation_method">use_group</field>
+    <field
+                name="group_ids"
+                eval="[(6,0,[ref('ssi_purchase.purchase_order_validator_group')])]"
             />
     <field name="restrict_additional" eval="0" />
 </record>
