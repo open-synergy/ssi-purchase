@@ -111,10 +111,9 @@ class PurchaseOrder(models.Model):
 
     def button_approve(self, force=False):
         _super = super(PurchaseOrder, self)
-        res = _super.button_approve(force=force)
         for record in self:
-            if record.state == "purchase" and (not record.name or record.name == "/"):
-                record._create_sequence()
+            record._create_sequence()
+        res = _super.button_approve(force=force)
         return res
 
     @api.model
