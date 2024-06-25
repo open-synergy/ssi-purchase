@@ -14,6 +14,7 @@
         "ssi_policy_mixin",
         "ssi_master_data_mixin",
         "ssi_sequence_mixin",
+        "ssi_policy_mixin",
     ],
     "data": [
         "security/ir_module_category_data.xml",

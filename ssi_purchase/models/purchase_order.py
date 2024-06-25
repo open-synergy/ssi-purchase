@@ -11,8 +11,10 @@ class PurchaseOrder(models.Model):
         "purchase.order",
         "mixin.policy",
         "mixin.sequence",
+        "mixin.print_document",
     ]
     _document_number_field = "name"
+    _automatically_insert_print_button = True
 
     def _compute_policy(self):
         _super = super(PurchaseOrder, self)
