@@ -15,6 +15,7 @@
         "ssi_master_data_mixin",
         "ssi_sequence_mixin",
         "ssi_policy_mixin",
+        "ssi_multiple_approval_mixin",
     ],
     "data": [
         "security/ir_module_category_data.xml",
@@ -22,6 +23,7 @@
         "security/ir.model.access.csv",
         "security/ir_rule_data.xml",
         "data/purchase_order_type.xml",
+        "data/approval_template_data.xml",
         "data/policy_template_data.xml",
         "data/ir_sequence_data.xml",
         "data/sequence_template_data.xml",

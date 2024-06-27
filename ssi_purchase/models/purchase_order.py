@@ -12,9 +12,19 @@ class PurchaseOrder(models.Model):
         "mixin.policy",
         "mixin.sequence",
         "mixin.print_document",
+        "mixin.multiple_approval",
     ]
     _document_number_field = "name"
     _automatically_insert_print_button = True
+    _approval_state_field = "state"
+    _approval_from_state = "draft"
+    _approval_to_state = "purchase"
+    _approval_cancel_state = "cancel"
+    _approval_reject_state = "reject"
+    _approval_state = "confirm"
+    _after_approved_method = "button_approve"
+    _automatically_insert_multiple_approval_page = True
+    _multiple_approval_xpath_reference = "//page[last()]"
 
     def _compute_policy(self):
         _super = super(PurchaseOrder, self)
@@ -28,6 +38,33 @@ class PurchaseOrder(models.Model):
         states={
             "draft": [("readonly", False)],
         },
+    )
+    state = fields.Selection(
+        selection_add=[
+            ("draft", "Draft"),
+            ("confirm", "Waiting for Approval"),
+            ("reject", "Rejected"),
+            ("purchase",),
+        ],
+        ondelete={
+            "confirm": "set default",
+            "reject": "set default",
+        },
+    )
+    approve_ok = fields.Boolean(
+        string="Can Approve",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    reject_ok = fields.Boolean(
+        string="Can Reject",
+        compute="_compute_policy",
+        compute_sudo=True,
+    )
+    restart_approval_ok = fields.Boolean(
+        string="Can Restart Approval",
+        compute="_compute_policy",
+        compute_sudo=True,
     )
     email_ok = fields.Boolean(
         string="Can Send by Email",
@@ -111,6 +148,16 @@ class PurchaseOrder(models.Model):
         res = _super.create(vals)
         return res
 
+    def action_confirm(self):
+        for record in self.sudo():
+            record.write(
+                {
+                    "state": "confirm",
+                }
+            )
+            record._add_supplier_to_product()
+            record.action_request_approval()
+
     def button_approve(self, force=False):
         _super = super(PurchaseOrder, self)
         for record in self:
@@ -135,6 +182,9 @@ class PurchaseOrder(models.Model):
             "done_ok",
             "unlock_ok",
             "manual_number_ok",
+            "approve_ok",
+            "reject_ok",
+            "restart_approval_ok",
         ]
         res += policy_field
         return res
