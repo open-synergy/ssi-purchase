@@ -51,6 +51,12 @@ class PurchaseOrder(models.Model):
             "reject": "set default",
         },
     )
+    total_qty = fields.Float(
+        string="Total Qty",
+        compute="_compute_total_qty",
+        store=True,
+    )
+
     approve_ok = fields.Boolean(
         string="Can Approve",
         compute="_compute_policy",
@@ -140,6 +146,17 @@ class PurchaseOrder(models.Model):
         res["name"] = "/"
 
         return res
+
+    @api.depends(
+        "order_line",
+        "order_line.product_uom_qty",
+    )
+    def _compute_total_qty(self):
+        for record in self:
+            result = 0.0
+            for line in record.order_line:
+                result += line.product_uom_qty
+            record.total_qty = result
 
     @api.model
     def create(self, vals):
