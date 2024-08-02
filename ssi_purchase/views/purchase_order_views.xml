@@ -18,6 +18,15 @@
             <field name="id" optional="hide" />
             <field name="display_name" string="# Document" />
         </xpath>
+        <xpath expr="//field[@name='state']" position="before">
+            <field name="percent_invoiced" widget="percentage" />
+        </xpath>
+        <xpath expr="//field[@name='state']" position="attributes">
+            <attribute name="invisible">0</attribute>
+        </xpath>
+        <xpath expr="//field[@name='invoice_status']" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>
     </field>
 </record>
 
@@ -201,7 +210,16 @@
         <xpath expr="//page[@name='products']/group[1]" position="before">
             <group name="group_extra" colspan="4" col="2">
                 <field name="total_qty" />
+                <field name="qty_invoiced" />
+                <field name="percent_invoiced" widget="percentage" />
             </group>
+        </xpath>
+
+        <xpath
+                expr="//field[@name='order_line']/tree/field[@name='price_tax']"
+                position="after"
+            >
+            <field name="percent_invoiced" widget="percentage" />
         </xpath>
     </field>
 </record>

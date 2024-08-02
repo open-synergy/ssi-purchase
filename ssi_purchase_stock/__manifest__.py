@@ -10,13 +10,14 @@
     "installable": True,
     "application": True,
     "depends": [
-        "purchase",
+        "ssi_purchase",
         "stock",
     ],
     "data": [
         "security/res_group_data.xml",
         "security/ir_rule_data.xml",
         "views/stock_warehouse_views.xml",
+        "views/purchase_order_views.xml",
     ],
     "demo": [],
 }
