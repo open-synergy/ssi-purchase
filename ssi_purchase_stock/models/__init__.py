@@ -5,4 +5,6 @@
 from . import (
     stock_warehouse,
     res_users,
+    purchase_order,
+    purchase_order_line,
 )
