@@ -56,7 +56,16 @@ class PurchaseOrder(models.Model):
         compute="_compute_total_qty",
         store=True,
     )
-
+    qty_invoiced = fields.Float(
+        string="Qty Invoiced",
+        compute="_compute_qty_invoice",
+        store=True,
+    )
+    percent_invoiced = fields.Float(
+        string="Percent Invoiced",
+        compute="_compute_qty_invoice",
+        store=True,
+    )
     approve_ok = fields.Boolean(
         string="Can Approve",
         compute="_compute_policy",
@@ -137,6 +146,25 @@ class PurchaseOrder(models.Model):
         compute="_compute_policy",
         compute_sudo=True,
     )
+
+    @api.depends(
+        "order_line",
+        "order_line.product_uom_qty",
+        "order_line.qty_invoiced",
+        "total_qty",
+    )
+    def _compute_qty_invoice(self):
+        for record in self:
+            qty_invoiced = percent_invoiced = 0.0
+            for line in record.order_line:
+                qty_invoiced += line.qty_invoiced
+            if record.total_qty != 0.0:
+                try:
+                    percent_invoiced = qty_invoiced / record.total_qty
+                except ZeroDivisionError:
+                    percent_invoiced = 0.0
+            record.qty_invoiced = qty_invoiced
+            record.percent_invoiced = percent_invoiced
 
     @api.model
     def default_get(self, fields):
