@@ -27,7 +27,7 @@ class PurchaseOrder(models.Model):
     _multiple_approval_xpath_reference = "//page[last()]"
 
     def _compute_policy(self):
-        _super = super(PurchaseOrder, self)
+        _super = super()
         _super._compute_policy()
 
     type_id = fields.Many2one(
@@ -38,6 +38,7 @@ class PurchaseOrder(models.Model):
         states={
             "draft": [("readonly", False)],
         },
+        default=lambda r: r._default_type_id(),
     )
     state = fields.Selection(
         selection_add=[
@@ -147,6 +148,15 @@ class PurchaseOrder(models.Model):
         compute_sudo=True,
     )
 
+    @api.model
+    def _default_type_id(self):
+        Ptype = self.env["purchase_order_type"]
+        result = False
+        results = Ptype.search([])
+        if len(results) > 0:
+            result = results[0]
+        return result
+
     @api.depends(
         "order_line",
         "order_line.product_uom_qty",
@@ -168,7 +178,7 @@ class PurchaseOrder(models.Model):
 
     @api.model
     def default_get(self, fields):
-        _super = super(PurchaseOrder, self)
+        _super = super()
         res = _super.default_get(fields)
 
         res["name"] = "/"
@@ -189,7 +199,7 @@ class PurchaseOrder(models.Model):
     @api.model
     def create(self, vals):
         vals["name"] = "/"
-        _super = super(PurchaseOrder, self)
+        _super = super()
         res = _super.create(vals)
         return res
 
@@ -204,7 +214,7 @@ class PurchaseOrder(models.Model):
             record.action_request_approval()
 
     def button_approve(self, force=False):
-        _super = super(PurchaseOrder, self)
+        _super = super()
         for record in self:
             record._create_sequence()
         res = _super.button_approve(force=force)
@@ -212,7 +222,7 @@ class PurchaseOrder(models.Model):
 
     @api.model
     def _get_policy_field(self):
-        res = super(PurchaseOrder, self)._get_policy_field()
+        res = super()._get_policy_field()
         policy_field = [
             "email_ok",
             "resend_email_ok",
