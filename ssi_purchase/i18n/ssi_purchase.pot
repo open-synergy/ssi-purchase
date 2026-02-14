@@ -373,6 +373,11 @@ msgid "Next Approvals"
 msgstr ""
 
 #. module: ssi_purchase
+#: model:purchase_order_type,name:ssi_purchase.purchase_order_type_normal
+msgid "Normal"
+msgstr ""
+
+#. module: ssi_purchase
 #: model:ir.model.fields,field_description:ssi_purchase.field_purchase_order_type__note
 msgid "Note"
 msgstr ""
