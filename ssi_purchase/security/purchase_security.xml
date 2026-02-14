@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="purchase.access_purchase_order" model="ir.model.access">
+        <field name="perm_read">0</field>
+        <field name="perm_write">0</field>
+        <field name="perm_create">0</field>
+        <field name="perm_unlink">0</field>
+    </record>
+    <record id="purchase.access_purchase_order_manager" model="ir.model.access">
+        <field name="perm_read">0</field>
+        <field name="perm_write">0</field>
+        <field name="perm_create">0</field>
+        <field name="perm_unlink">0</field>
+    </record>
+</odoo>

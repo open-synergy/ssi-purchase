@@ -18,6 +18,7 @@
         "ssi_multiple_approval_mixin",
     ],
     "data": [
+        "security/purchase_security.xml",
         "security/ir_module_category_data.xml",
         "security/res_group_data.xml",
         "security/ir.model.access.csv",
