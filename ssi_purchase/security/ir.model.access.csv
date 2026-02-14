@@ -1,3 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_purchase_order_type_all,purchase_order_type - all,model_purchase_order_type,,1,0,0,0
 access_purchase_order_type_configurator,purchase_order_type - configurator,model_purchase_order_type,purchase_order_type_group,1,1,1,1
+access_purchase_order_all,purchase_order - all,model_purchase_order,,1,0,0,0
+access_purchase_order_viewer,purchase_order - viewer,model_purchase_order,purchase_order_viewer_group,1,0,0,0
+access_purchase_order_user,purchase_order - user,model_purchase_order,purchase_order_user_group,1,1,1,1
