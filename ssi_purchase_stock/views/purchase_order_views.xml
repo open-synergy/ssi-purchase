@@ -44,6 +44,24 @@
                 <field name="qty_to_receive" />
                 <field name="percent_received" widget="percentage" />
             </xpath>
+            <xpath expr="//group[@name='policy_2']" position="inside">
+                <field name="receive_product_ok" />
+            </xpath>
+        </data>
+    </field>
+</record>
+
+<record id="purchase_order_view_form3" model="ir.ui.view">
+    <field name="name">purchase.order - form</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit" />
+    <field name="arch" type="xml">
+        <data>
+        <xpath expr="//button[@name='action_view_picking']" position="attributes">
+            <attribute
+                        name="attrs"
+                    >{'invisible': [('receive_product_ok', '!=', True)]}</attribute>
+        </xpath>
         </data>
     </field>
 </record>

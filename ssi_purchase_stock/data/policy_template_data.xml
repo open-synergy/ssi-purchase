@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 OpenSynergy Indonesia
+     Copyright 2024 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3.0-standalone.html). -->
+<odoo>
+<data noupdate="0">
+<record
+            id="policy_template_purchase_order_receive_product"
+            model="policy.template_detail"
+        >
+    <field name="template_id" ref="ssi_purchase.policy_template_purchase_order" />
+    <field
+                name="field_id"
+                search="[('model_id.model','=','purchase.order'),('name','=','receive_product_ok')]"
+            />
+    <field name="restrict_state" eval="1" />
+    <field
+                name="state_ids"
+                search="[('field_id.model_id.model','=','purchase.order'),('value','in',['purchase','done'])]"
+            />
+    <field name="restrict_user" eval="1" />
+    <field name="computation_method">use_group</field>
+    <field
+                name="group_ids"
+                eval="[(6,0,[ref('ssi_purchase.purchase_order_user_group')])]"
+            />
+    <field name="restrict_additional" eval="1" />
+    <field name="additional_python_code">result = False
+if not document.is_shipped or document.picking_count != 0:
+    result = True
+    </field>
+</record>
+</data>
+</odoo>
