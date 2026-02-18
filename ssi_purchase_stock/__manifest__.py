@@ -16,6 +16,7 @@
     "data": [
         "security/res_group_data.xml",
         "security/ir_rule_data.xml",
+        "data/policy_template_data.xml",
         "views/stock_warehouse_views.xml",
         "views/purchase_order_views.xml",
     ],

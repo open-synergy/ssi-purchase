@@ -9,6 +9,7 @@ class PurchaseOrder(models.Model):
     _name = "purchase.order"
     _inherit = [
         "purchase.order",
+        "mixin.policy",
     ]
 
     qty_to_receive = fields.Float(
@@ -25,6 +26,12 @@ class PurchaseOrder(models.Model):
         string="Percent Received",
         compute="_compute_receive",
         store=True,
+    )
+
+    receive_product_ok = fields.Boolean(
+        string="Can Receive Product",
+        compute="_compute_policy",
+        compute_sudo=True,
     )
 
     @api.depends(
@@ -46,3 +53,16 @@ class PurchaseOrder(models.Model):
             record.qty_received = qty_received
             record.percent_received = percent_received
             record.qty_to_receive = qty_to_receive
+
+    def _compute_policy(self):
+        _super = super()
+        _super._compute_policy()
+
+    @api.model
+    def _get_policy_field(self):
+        res = super()._get_policy_field()
+        policy_field = [
+            "receive_product_ok",
+        ]
+        res += policy_field
+        return res
