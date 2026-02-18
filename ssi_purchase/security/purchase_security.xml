@@ -12,4 +12,22 @@
         <field name="perm_create">0</field>
         <field name="perm_unlink">0</field>
     </record>
+    <record
+        id="purchase.access_purchase_order_invoicing_payments_readonly"
+        model="ir.model.access"
+    >
+        <field name="perm_read">0</field>
+        <field name="perm_write">0</field>
+        <field name="perm_create">0</field>
+        <field name="perm_unlink">0</field>
+    </record>
+    <record
+        id="purchase.access_purchase_order_invoicing_payments"
+        model="ir.model.access"
+    >
+        <field name="perm_read">0</field>
+        <field name="perm_write">0</field>
+        <field name="perm_create">0</field>
+        <field name="perm_unlink">0</field>
+    </record>
 </odoo>
