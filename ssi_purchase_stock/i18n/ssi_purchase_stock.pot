@@ -14,6 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: ssi_purchase_stock
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order__allowed_picking_type_ids
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__allowed_picking_type_ids
+msgid "Allowed Deliver To"
+msgstr ""
+
+#. module: ssi_purchase_stock
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order__allowed_policy_template_ids
 msgid "Allowed Policy Templates"
 msgstr ""
@@ -24,8 +30,14 @@ msgid "Can Receive Product"
 msgstr ""
 
 #. module: ssi_purchase_stock
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__default_picking_type_id
+msgid "Default Deliver To"
+msgstr ""
+
+#. module: ssi_purchase_stock
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__display_name
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_res_users__display_name
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_stock_warehouse__display_name
 msgid "Display Name"
@@ -34,14 +46,21 @@ msgstr ""
 #. module: ssi_purchase_stock
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order__id
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__id
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_res_users__id
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_stock_warehouse__id
 msgid "ID"
 msgstr ""
 
 #. module: ssi_purchase_stock
+#: model_terms:ir.ui.view,arch_db:ssi_purchase_stock.purchase_order_type_view_form
+msgid "Inventories"
+msgstr ""
+
+#. module: ssi_purchase_stock
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order____last_update
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type____last_update
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_res_users____last_update
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_stock_warehouse____last_update
 msgid "Last Modified on"
@@ -71,6 +90,11 @@ msgstr ""
 #. module: ssi_purchase_stock
 #: model:ir.model,name:ssi_purchase_stock.model_purchase_order_line
 msgid "Purchase Order Line"
+msgstr ""
+
+#. module: ssi_purchase_stock
+#: model:ir.model,name:ssi_purchase_stock.model_purchase_order_type
+msgid "Purchase Order Type"
 msgstr ""
 
 #. module: ssi_purchase_stock
