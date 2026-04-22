@@ -34,6 +34,11 @@ class PurchaseOrder(models.Model):
         compute_sudo=True,
     )
 
+    allowed_picking_type_ids = fields.Many2many(
+        string="Allowed Deliver To",
+        related="type_id.allowed_picking_type_ids",
+    )
+
     @api.depends(
         "order_line",
         "order_line.qty_to_receive",
@@ -66,3 +71,27 @@ class PurchaseOrder(models.Model):
         ]
         res += policy_field
         return res
+
+    def action_view_picking(self):
+        _super = super()
+        action = _super.action_view_picking()
+        picking_id = action.get("res_id")
+        if action and picking_id:
+            picking = self.env["stock.picking"].browse(picking_id)
+            if picking.picking_type_id and picking.picking_type_id.category_id:
+                ctx = dict(action.get("context", {}))
+                ctx["default_picking_type_category_id"] = (
+                    picking.picking_type_id.category_id.id
+                )
+                action["context"] = ctx
+        return action
+
+    @api.onchange("company_id")
+    def _onchange_company_id(self):
+        self.picking_type_id = False
+
+    @api.onchange("type_id")
+    def _onchange_picking_type_id(self):
+        self.picking_type_id = False
+        if self.type_id and self.type_id.default_picking_type_id:
+            self.picking_type_id = self.type_id.default_picking_type_id.id

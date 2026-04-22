@@ -11,7 +11,7 @@
     "application": True,
     "depends": [
         "ssi_purchase",
-        "stock",
+        "purchase_stock",
     ],
     "data": [
         "security/res_group_data.xml",
@@ -19,6 +19,7 @@
         "data/policy_template_data.xml",
         "views/stock_warehouse_views.xml",
         "views/purchase_order_views.xml",
+        "views/purchase_order_type_views.xml",
     ],
     "demo": [],
 }
