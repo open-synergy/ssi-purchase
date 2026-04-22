@@ -57,6 +57,18 @@
     <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit" />
     <field name="arch" type="xml">
         <data>
+        <xpath expr="//field[@name='picking_type_id']" position="before">
+            <field
+                        name="allowed_picking_type_ids"
+                        widget="many2many_tags"
+                        invisible="1"
+                    />
+        </xpath>
+        <xpath expr="//field[@name='picking_type_id']" position="attributes">
+            <attribute
+                        name="domain"
+                    >[('id', 'in', allowed_picking_type_ids)]</attribute>
+        </xpath>
         <xpath expr="//button[@name='action_view_picking']" position="attributes">
             <attribute
                         name="attrs"

@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Purchase + Inventory Integration",
-    "version": "14.0.1.3.0",
+    "version": "14.0.2.0.0",
     "website": "https://simetri-sinergi.id",
     "author": "PT. Simetri Sinergi Indonesia, OpenSynergy Indonesia",
     "license": "AGPL-3",
@@ -11,7 +11,7 @@
     "application": True,
     "depends": [
         "ssi_purchase",
-        "stock",
+        "purchase_stock",
     ],
     "data": [
         "security/res_group_data.xml",
@@ -19,6 +19,7 @@
         "data/policy_template_data.xml",
         "views/stock_warehouse_views.xml",
         "views/purchase_order_views.xml",
+        "views/purchase_order_type_views.xml",
     ],
     "demo": [],
 }
