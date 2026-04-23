@@ -10,6 +10,7 @@ class PurchaseOrder(models.Model):
     _inherit = [
         "purchase.order",
         "mixin.policy",
+        "mixin.many2one_configurator",
     ]
 
     qty_to_receive = fields.Float(
@@ -34,9 +35,28 @@ class PurchaseOrder(models.Model):
         compute_sudo=True,
     )
 
+    @api.depends(
+        "type_id",
+    )
+    def _compute_allowed_picking_type_ids(self):
+        for record in self:
+            result = False
+            if record.type_id:
+                result = record._m2o_configurator_get_filter(
+                    object_name="stock.picking.type",
+                    method_selection=record.type_id.picking_type_selection_method,
+                    manual_recordset=record.type_id.allowed_picking_type_ids,
+                    domain=record.type_id.picking_type_domain,
+                    python_code=record.type_id.picking_type_python_code,
+                )
+            record.allowed_picking_type_ids = result
+
     allowed_picking_type_ids = fields.Many2many(
         string="Allowed Deliver To",
-        related="type_id.allowed_picking_type_ids",
+        comodel_name="stock.picking.type",
+        compute="_compute_allowed_picking_type_ids",
+        store=False,
+        compute_sudo=False,
     )
 
     @api.depends(

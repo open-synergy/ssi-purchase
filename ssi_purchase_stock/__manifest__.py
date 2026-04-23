@@ -12,6 +12,7 @@
     "depends": [
         "ssi_purchase",
         "purchase_stock",
+        "ssi_m2o_configurator_mixin",
     ],
     "data": [
         "security/res_group_data.xml",
