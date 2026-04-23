@@ -16,6 +16,7 @@ msgstr ""
 #. module: ssi_purchase_stock
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order__allowed_picking_type_ids
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__allowed_picking_type_ids
+#: model_terms:ir.ui.view,arch_db:ssi_purchase_stock.purchase_order_type_view_form
 msgid "Allowed Deliver To"
 msgstr ""
 
@@ -35,12 +36,33 @@ msgid "Default Deliver To"
 msgstr ""
 
 #. module: ssi_purchase_stock
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__picking_type_domain
+msgid "Deliver To Domain"
+msgstr ""
+
+#. module: ssi_purchase_stock
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__picking_type_python_code
+msgid "Deliver To Python Code"
+msgstr ""
+
+#. module: ssi_purchase_stock
+#: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__picking_type_selection_method
+msgid "Deliver To Selection Method"
+msgstr ""
+
+#. module: ssi_purchase_stock
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_type__display_name
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_res_users__display_name
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_stock_warehouse__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: ssi_purchase_stock
+#: model:ir.model.fields.selection,name:ssi_purchase_stock.selection__purchase_order_type__picking_type_selection_method__domain
+#: model_terms:ir.ui.view,arch_db:ssi_purchase_stock.purchase_order_type_view_form
+msgid "Domain"
 msgstr ""
 
 #. module: ssi_purchase_stock
@@ -64,6 +86,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_res_users____last_update
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_stock_warehouse____last_update
 msgid "Last Modified on"
+msgstr ""
+
+#. module: ssi_purchase_stock
+#: model:ir.model.fields.selection,name:ssi_purchase_stock.selection__purchase_order_type__picking_type_selection_method__manual
+msgid "Manual"
 msgstr ""
 
 #. module: ssi_purchase_stock
@@ -104,6 +131,12 @@ msgid "Purchase Users"
 msgstr ""
 
 #. module: ssi_purchase_stock
+#: model:ir.model.fields.selection,name:ssi_purchase_stock.selection__purchase_order_type__picking_type_selection_method__code
+#: model_terms:ir.ui.view,arch_db:ssi_purchase_stock.purchase_order_type_view_form
+msgid "Python Code"
+msgstr ""
+
+#. module: ssi_purchase_stock
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order__qty_received
 msgid "Qty Received"
 msgstr ""
@@ -112,6 +145,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order__qty_to_receive
 #: model:ir.model.fields,field_description:ssi_purchase_stock.field_purchase_order_line__qty_to_receive
 msgid "Qty To Receive"
+msgstr ""
+
+#. module: ssi_purchase_stock
+#: model_terms:ir.ui.view,arch_db:ssi_purchase_stock.purchase_order_type_view_form
+msgid "Selecton Method"
 msgstr ""
 
 #. module: ssi_purchase_stock
