@@ -12,6 +12,20 @@ class PurchaseOrderType(models.Model):
         domain = "[('code','=','incoming')]"
         return domain
 
+    picking_type_selection_method = fields.Selection(
+        default="domain",
+        selection=[("manual", "Manual"), ("domain", "Domain"), ("code", "Python Code")],
+        string="Deliver To Selection Method",
+        required=True,
+    )
+    picking_type_domain = fields.Text(
+        string="Deliver To Domain",
+        default="[]",
+    )
+    picking_type_python_code = fields.Text(
+        string="Deliver To Python Code",
+        default="result = []",
+    )
     allowed_picking_type_ids = fields.Many2many(
         string="Allowed Deliver To",
         comodel_name="stock.picking.type",
