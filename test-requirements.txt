@@ -1,1 +1,2 @@
 odoo14-addon-ssi-operating-unit-mixin
+odoo14-addon-ssi-m2o-configurator-mixin
