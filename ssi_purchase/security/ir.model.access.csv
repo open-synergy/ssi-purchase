@@ -4,3 +4,6 @@ access_purchase_order_type_configurator,purchase_order_type - configurator,model
 access_purchase_order_all,purchase_order - all,model_purchase_order,,1,0,0,0
 access_purchase_order_viewer,purchase_order - viewer,model_purchase_order,purchase_order_viewer_group,1,0,0,0
 access_purchase_order_user,purchase_order - user,model_purchase_order,purchase_order_user_group,1,1,1,1
+access_purchase_order_line_all,purchase_order_line - all,model_purchase_order_line,,1,0,0,0
+access_purchase_order_line_viewer,purchase_order_line - viewer,model_purchase_order_line,purchase_order_viewer_group,1,0,0,0
+access_purchase_order_line_user,purchase_order_line - user,model_purchase_order_line,purchase_order_user_group,1,1,1,1
