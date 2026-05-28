@@ -100,9 +100,9 @@ class PurchaseOrder(models.Model):
             picking = self.env["stock.picking"].browse(picking_id)
             if picking.picking_type_id and picking.picking_type_id.category_id:
                 ctx = dict(action.get("context", {}))
-                ctx["default_picking_type_category_id"] = (
-                    picking.picking_type_id.category_id.id
-                )
+                ctx[
+                    "default_picking_type_category_id"
+                ] = picking.picking_type_id.category_id.id
                 action["context"] = ctx
         return action
 

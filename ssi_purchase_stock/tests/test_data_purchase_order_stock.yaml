@@ -1,0 +1,187 @@
+scenarios:
+  - name: "Purchase Order + Stock - Full workflow with storable product"
+    steps:
+      - step: "Setup - create purchase order type"
+        action: "create"
+        model: "purchase_order_type"
+        save_as: "po_type_stock"
+        values:
+          name: "Stock PO Type"
+          code: "STPT001"
+
+      - step: "Setup - create vendor"
+        action: "create"
+        model: "res.partner"
+        save_as: "vendor_stock"
+        values:
+          name: "Test Vendor Stock"
+          supplier_rank: 1
+
+      - step: "Setup - create storable product"
+        action: "create"
+        model: "product.product"
+        save_as: "product_stock"
+        values:
+          name: "Test Storable Product"
+          type: "product"
+          purchase_ok: true
+
+      - step: "Create purchase order with storable product"
+        action: "create"
+        model: "purchase.order"
+        save_as: "po_stock"
+        as_user: "base.user_admin"
+        values:
+          partner_id: "EVAL: registry['vendor_stock'].id"
+          type_id: "EVAL: registry['po_type_stock'].id"
+
+      - step: "Create purchase order line"
+        action: "create"
+        model: "purchase.order.line"
+        save_as: "po_line_stock"
+        as_user: "base.user_admin"
+        values:
+          order_id: "EVAL: registry['po_stock'].id"
+          product_id: "EVAL: registry['product_stock'].id"
+          product_qty: 20.0
+          price_unit: 75.0
+          name: "Test Storable Product"
+          date_planned: "2026-06-01"
+
+      - step: "Invalidate cache after line creation"
+        action: "call"
+        target: "po_stock"
+        method: "invalidate_cache"
+
+      - step: "Assert purchase order created in draft"
+        action: "assert"
+        target: "po_stock"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+          total_qty:
+            type: "value"
+            expected: 20.0
+
+      - step: "Confirm purchase order"
+        action: "call"
+        target: "po_stock"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Invalidate cache after confirm"
+        action: "call"
+        target: "po_stock"
+        method: "invalidate_cache"
+
+      - step: "Approve purchase order"
+        action: "call"
+        target: "po_stock"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after approve"
+        action: "call"
+        target: "po_stock"
+        method: "invalidate_cache"
+
+      - step: "Assert purchase order in purchase state with stock fields"
+        action: "assert"
+        target: "po_stock"
+        asserts:
+          state:
+            type: "value"
+            expected: "purchase"
+          qty_to_receive:
+            type: "value"
+            expected: 20.0
+          qty_received:
+            type: "value"
+            expected: 0.0
+
+  - name: "Purchase Order + Stock - Consumable product (no receipt)"
+    steps:
+      - step: "Setup - create purchase order type"
+        action: "create"
+        model: "purchase_order_type"
+        save_as: "po_type_consu"
+        values:
+          name: "Consu PO Type"
+          code: "CNPT001"
+
+      - step: "Setup - create vendor"
+        action: "create"
+        model: "res.partner"
+        save_as: "vendor_consu"
+        values:
+          name: "Test Vendor Consu"
+          supplier_rank: 1
+
+      - step: "Setup - create consumable product"
+        action: "create"
+        model: "product.product"
+        save_as: "product_consu"
+        values:
+          name: "Test Consumable Product"
+          type: "consu"
+          purchase_ok: true
+
+      - step: "Create purchase order with consumable product"
+        action: "create"
+        model: "purchase.order"
+        save_as: "po_consu"
+        as_user: "base.user_admin"
+        values:
+          partner_id: "EVAL: registry['vendor_consu'].id"
+          type_id: "EVAL: registry['po_type_consu'].id"
+
+      - step: "Create purchase order line"
+        action: "create"
+        model: "purchase.order.line"
+        save_as: "po_line_consu"
+        as_user: "base.user_admin"
+        values:
+          order_id: "EVAL: registry['po_consu'].id"
+          product_id: "EVAL: registry['product_consu'].id"
+          product_qty: 15.0
+          price_unit: 50.0
+          name: "Test Consumable Product"
+          date_planned: "2026-06-01"
+
+      - step: "Confirm purchase order"
+        action: "call"
+        target: "po_consu"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after confirm"
+        action: "call"
+        target: "po_consu"
+        method: "invalidate_cache"
+
+      - step: "Approve purchase order"
+        action: "call"
+        target: "po_consu"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after approve"
+        action: "call"
+        target: "po_consu"
+        method: "invalidate_cache"
+
+      - step: "Assert consumable product qty_to_receive is set"
+        action: "assert"
+        target: "po_consu"
+        asserts:
+          state:
+            type: "value"
+            expected: "purchase"
+          qty_to_receive:
+            type: "value"
+            expected: 15.0

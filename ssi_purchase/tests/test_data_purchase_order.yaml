@@ -1,0 +1,190 @@
+scenarios:
+  - name: "Purchase Order Type - Create master data"
+    steps:
+      - step: "Create purchase order type"
+        action: "create"
+        model: "purchase_order_type"
+        save_as: "po_type"
+        values:
+          name: "Test PO Type"
+          code: "TPT001"
+
+      - step: "Assert purchase order type created"
+        action: "assert"
+        target: "po_type"
+        asserts:
+          name:
+            type: "value"
+            expected: "Test PO Type"
+          code:
+            type: "value"
+            expected: "TPT001"
+          active:
+            type: "value"
+            expected: true
+
+  - name: "Purchase Order - Full Workflow: draft to purchase"
+    steps:
+      - step: "Setup - create purchase order type"
+        action: "create"
+        model: "purchase_order_type"
+        save_as: "po_type_wf"
+        values:
+          name: "Standard Purchase Type"
+          code: "SPT001"
+
+      - step: "Setup - create vendor"
+        action: "create"
+        model: "res.partner"
+        save_as: "vendor_wf"
+        values:
+          name: "Test Vendor PO"
+          supplier_rank: 1
+
+      - step: "Setup - create product"
+        action: "create"
+        model: "product.product"
+        save_as: "product_wf"
+        values:
+          name: "Test Product PO"
+          type: "consu"
+          purchase_ok: true
+
+      - step: "Create purchase order"
+        action: "create"
+        model: "purchase.order"
+        save_as: "po_wf"
+        as_user: "base.user_admin"
+        values:
+          partner_id: "EVAL: registry['vendor_wf'].id"
+          type_id: "EVAL: registry['po_type_wf'].id"
+
+      - step: "Create purchase order line"
+        action: "create"
+        model: "purchase.order.line"
+        save_as: "po_line_wf"
+        as_user: "base.user_admin"
+        values:
+          order_id: "EVAL: registry['po_wf'].id"
+          product_id: "EVAL: registry['product_wf'].id"
+          product_qty: 10.0
+          price_unit: 100.0
+          name: "Test Product PO"
+          date_planned: "2026-06-01"
+
+      - step: "Invalidate cache after line creation"
+        action: "call"
+        target: "po_wf"
+        method: "invalidate_cache"
+
+      - step: "Assert purchase order created in draft"
+        action: "assert"
+        target: "po_wf"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+          total_qty:
+            type: "value"
+            expected: 10.0
+
+      - step: "Confirm purchase order"
+        action: "call"
+        target: "po_wf"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Invalidate cache after confirm"
+        action: "call"
+        target: "po_wf"
+        method: "invalidate_cache"
+
+      - step: "Approve purchase order"
+        action: "call"
+        target: "po_wf"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after approve"
+        action: "call"
+        target: "po_wf"
+        method: "invalidate_cache"
+
+      - step: "Assert purchase order in purchase state"
+        action: "assert"
+        target: "po_wf"
+        asserts:
+          state:
+            type: "value"
+            expected: "purchase"
+
+  - name: "Purchase Order - Cancel flow"
+    steps:
+      - step: "Setup - create purchase order type"
+        action: "create"
+        model: "purchase_order_type"
+        save_as: "po_type_cancel"
+        values:
+          name: "Cancel Test PO Type"
+          code: "CPT001"
+
+      - step: "Setup - create vendor"
+        action: "create"
+        model: "res.partner"
+        save_as: "vendor_cancel"
+        values:
+          name: "Test Vendor Cancel"
+          supplier_rank: 1
+
+      - step: "Setup - create product"
+        action: "create"
+        model: "product.product"
+        save_as: "product_cancel"
+        values:
+          name: "Test Product Cancel"
+          type: "consu"
+          purchase_ok: true
+
+      - step: "Create purchase order"
+        action: "create"
+        model: "purchase.order"
+        save_as: "po_cancel"
+        as_user: "base.user_admin"
+        values:
+          partner_id: "EVAL: registry['vendor_cancel'].id"
+          type_id: "EVAL: registry['po_type_cancel'].id"
+
+      - step: "Create purchase order line"
+        action: "create"
+        model: "purchase.order.line"
+        save_as: "po_line_cancel"
+        as_user: "base.user_admin"
+        values:
+          order_id: "EVAL: registry['po_cancel'].id"
+          product_id: "EVAL: registry['product_cancel'].id"
+          product_qty: 5.0
+          price_unit: 50.0
+          name: "Test Product Cancel"
+          date_planned: "2026-06-01"
+
+      - step: "Assert purchase order created in draft"
+        action: "assert"
+        target: "po_cancel"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+      - step: "Cancel purchase order"
+        action: "call"
+        target: "po_cancel"
+        method: "button_cancel"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "cancel"
